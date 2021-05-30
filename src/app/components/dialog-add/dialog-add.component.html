@@ -1,0 +1,55 @@
+<div class="outer-container">
+    <div class="form-container">
+        <form [formGroup]="addMessageForm" (submit)="submit()">
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Típus</mat-label>
+                <mat-select formControlName="type">
+                    <mat-option>Válasszon egy típust...</mat-option>
+                    <mat-option value="notification">Értesítés</mat-option>
+                    <mat-option value="reminder">Emlékeztető</mat-option>
+                    <mat-option value="instruction">Instrukció</mat-option>
+                    <mat-option value="alert">Figyelmeztetés</mat-option>
+                </mat-select>
+                <mat-error *ngIf="addMessageForm.controls.type.touched && addMessageForm.controls.type.invalid">
+                    <span *ngIf="addMessageForm.controls.type.errors.required">A mező kitöltése kötelező.</span>
+                    <span *ngIf="addMessageForm.controls.type.errors.pattern">A típus kiválasztása kötelező.</span>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Üzenet</mat-label>
+                <textarea  matInput formControlName="text" type="text"></textarea>
+                <mat-error *ngIf="addMessageForm.controls.text.touched && addMessageForm.controls.text.invalid">
+                    <span *ngIf="addMessageForm.controls.text.errors.required">A mező kitöltése kötelező.</span>
+                    <span *ngIf="addMessageForm.controls.text.errors.pattern">Az üzenet megadása kötelező.</span>
+                </mat-error>
+                </mat-form-field>
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Címzett</mat-label>
+                <mat-select formControlName="uid">
+                    <ng-contanier *ngFor="let a of listUsers()">
+                        <mat-option [value]='a.uid'>{{ a.lastName }} {{ a.firstName }}</mat-option>
+                    </ng-contanier>
+                </mat-select>
+                <mat-error *ngIf="addMessageForm.controls.uid.touched && addMessageForm.controls.uid.invalid">
+                <span *ngIf="addMessageForm.controls.uid.errors.required">A mező kitöltése kötelező.</span>
+                <span *ngIf="addMessageForm.controls.uid.errors.pattern">A címzett kiválasztása kötelező.</span>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Prioritás</mat-label>
+                <mat-select formControlName="priority">
+                    <mat-option>Adja meg az üzenet prioritását...</mat-option>
+                    <mat-option value="routine">Rutin</mat-option>
+                    <mat-option value="urgent">Fontos</mat-option>
+                    <mat-option value="asap">Kiemelt fontosságú</mat-option>
+                    <mat-option value="stat">Azonnali beavatkozást igényel</mat-option>
+                </mat-select>
+                <mat-error *ngIf="addMessageForm.controls.priority.touched && addMessageForm.controls.priority.invalid">
+                <span *ngIf="addMessageForm.controls.priority.errors.required">A mező kitöltése kötelező.</span>
+                <span *ngIf="addMessageForm.controls.priority.errors.pattern">A prioritás kiválasztása kötelező.</span>
+                </mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">Küldés</button>
+        </form>
+    </div>
+</div>

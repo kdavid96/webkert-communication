@@ -1,0 +1,287 @@
+<div class="container">
+    <div class="toolbar">
+        <mat-toolbar color="primary">
+            <button><a routerLink="/profile"><span class="material-icons">home</span></a></button>
+            <button><a routerLink="/messages"><span class="material-icons">message</span></a></button>
+            <button><a routerLink="/contact"><span class="material-icons">description</span></a></button>
+            <!--<button><a routerLink="/calendar"><span class="material-icons">date_range</span></a></button>-->
+            <span class="example-spacer"></span>
+        </mat-toolbar>
+    </div>
+    <mat-card class="home-card">
+        <div class="home-card-header">
+            <div mat-card-avatar class="home-card-header-image"></div>
+            <mat-card-title id="title" *ngIf="getName()">Üdvözlöm, {{ getName() }}</mat-card-title>
+        </div>
+        <mat-card-content class="mobile">
+            <mat-card-actions>
+                <mat-list>
+                    <h3 mat-subheader *ngIf="getNotifications().length > 0; else emptyNotifications">Értesítések</h3>
+                    <ng-contanier *ngFor="let a of getNotifications()">
+                            <mat-list-item *ngIf="a.type === 'notification'" [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                                <mat-icon mat-list-icon>note</mat-icon>
+                                <p mat-line class="demo-2">{{ a.content }}</p>
+                                <h4 mat-line>Feladó: {{ a.sender }}</h4>
+                            </mat-list-item>
+                            <mat-list-item *ngIf="a.type === 'notification'" [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                                <button  (click)="save(a)"><span class="material-icons">save</span></button>
+                                <mat-select style="width:150px;" [(value)]="a.status" placeholder="Status">
+                                    <mat-option value="preparation">Preparation</mat-option>
+                                    <mat-option value="in-progress">In-progress</mat-option>
+                                    <mat-option value="not-done">Not-done</mat-option>
+                                    <mat-option value="on-hold">On-hold</mat-option>
+                                    <mat-option value="stopped">Stopped</mat-option>
+                                    <mat-option value="completed">Completed</mat-option>
+                                    <mat-option value="entered-in-error">Entered-in-error</mat-option>
+                                    <mat-option value="unknown">Unknown</mat-option>
+                                </mat-select>
+                                <button (click)="check(a)"><span class="material-icons">check</span></button>
+                                <button (click)="delete(a)"><span class="material-icons">delete</span></button>
+                            </mat-list-item>
+                        </ng-contanier>
+                        <ng-template #emptyNotifications>
+                            <h3 mat-subheader>Értesítések</h3>
+                            <mat-list-item>
+                                <mat-icon><span class="material-icons">highlight_off</span></mat-icon>
+                                <p mat-line class="demo-2">Nincsenek aktuális értesítések</p>
+                        </mat-list-item>
+                        </ng-template>
+                </mat-list>
+                <mat-list class="mat-list-test">
+                    <h3 mat-subheader *ngIf="getReminders().length > 0; else emptyReminders">Emlékeztetők</h3>
+                    <ng-contanier *ngFor="let a of getReminders()">
+                        <mat-list-item *ngIf="a.type === 'reminder'" [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                            <mat-icon class="mobil-no" mat-list-icon>note</mat-icon>
+                            <p mat-line>{{ a.content }}</p>
+                            <h4 mat-line class="demo-2">Feladó: {{ a.sender }}</h4>
+                        </mat-list-item>
+                        <mat-list-item *ngIf="a.type === 'reminder'" [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                            <button (click)="save(a)"><span class="mobil-no" class="material-icons">save</span></button>
+                            <mat-select class="mobil-smol" [(value)]="a.status" placeholder="Status">
+                                <mat-option value="preparation">Preparation</mat-option>
+                                <mat-option value="in-progress">In-progress</mat-option>
+                                <mat-option value="not-done">Not-done</mat-option>
+                                <mat-option value="on-hold">On-hold</mat-option>
+                                <mat-option value="stopped">Stopped</mat-option>
+                                <mat-option value="completed">Completed</mat-option>
+                                <mat-option value="entered-in-error">Entered-in-error</mat-option>
+                                <mat-option value="unknown">Unknown</mat-option>
+                            </mat-select>
+                            <ng-container *ngIf="a.status != 'completed'">
+                            <button (click)="check(a)"><span class="material-icons">check</span></button>
+                            </ng-container>
+                            <ng-container *ngIf="a.status == 'completed'">
+                                <button><span class="material-icons">check</span></button>
+                            </ng-container>
+                            <button (click)="delete(a)"><span class="material-icons">delete</span></button>
+                            <mat-button></mat-button>
+                        </mat-list-item>
+                    </ng-contanier>
+                        <ng-template #emptyReminders>
+                            <h3 mat-subheader>Emlékeztetők</h3>
+                            <mat-list-item>
+                                <mat-icon><span class="material-icons">highlight_off</span></mat-icon>
+                                <p mat-line class="demo-2">Nincsenek aktuális emlékeztetők</p>
+                        </mat-list-item>
+                        </ng-template>
+                </mat-list>
+                <mat-list>
+                    <h3 mat-subheader *ngIf="getInstructions().length > 0; else emptyInstructions">Instrukciók</h3>
+                    <ng-contanier *ngFor="let a of getInstructions()">
+                        <mat-list-item *ngIf="a.type === 'instruction'" [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                            <mat-icon class="mobil-no"  mat-list-icon>note</mat-icon>
+                            <h2 mat-line class="demo-2">{{ a.content }}</h2>
+                            <p mat-line>Feladó: {{ a.sender }}</p>
+                        </mat-list-item>
+                        <mat-list-item *ngIf="a.type === 'instruction'" [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                            <button (click)="save(a)"><span class="material-icons">save</span></button>
+                            <mat-select class="mobil-smol" [(value)]="a.status" placeholder="Status">
+                                <mat-option value="preparation">Preparation</mat-option>
+                                <mat-option value="in-progress">In-progress</mat-option>
+                                <mat-option value="not-done">Not-done</mat-option>
+                                <mat-option value="on-hold">On-hold</mat-option>
+                                <mat-option value="stopped">Stopped</mat-option>
+                                <mat-option value="completed">Completed</mat-option>
+                                <mat-option value="entered-in-error">Entered-in-error</mat-option>
+                                <mat-option value="unknown">Unknown</mat-option>
+                            </mat-select>
+                            <button (click)="check(a)"><span class="material-icons">check</span></button>
+                            <button (click)="delete(a)"><span class="material-icons">delete</span></button>
+                        </mat-list-item>
+                    </ng-contanier>
+                    <ng-template #emptyInstructions>
+                        <h3 mat-subheader>Instrukciók</h3>
+                        <mat-list-item>
+                            <mat-icon><span class="material-icons">highlight_off</span></mat-icon>
+                            <p mat-line class="demo-2">Nincsenek aktuális instrukciók</p>
+                    </mat-list-item>
+                    </ng-template>
+                </mat-list>
+                <mat-list>
+                    <h3 mat-subheader *ngIf="getAlerts().length > 0; else emptyAlerts">Figyelmeztetések</h3>
+                    <ng-contanier *ngFor="let a of getAlerts()" [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                        <mat-list-item *ngIf="a.type === 'alert'">
+                            <mat-icon class="mobil-no"  mat-list-icon>note</mat-icon>
+                            <h4 mat-line>Feladó: {{ a.sender }}</h4>
+                            <p mat-line class="demo-2">{{ a.content }}</p>
+                        </mat-list-item>
+                        <mat-list-item *ngIf="a.type === 'alert'">
+                            <button (click)="save(a)"><span class="material-icons">save</span></button>
+                            <mat-select style="width:150px;" class="mobil-smol" [(value)]="a.status" placeholder="Status">
+                                <mat-option value="preparation">Preparation</mat-option>
+                                <mat-option value="in-progress">In-progress</mat-option>
+                                <mat-option value="not-done">Not-done</mat-option>
+                                <mat-option value="on-hold">On-hold</mat-option>
+                                <mat-option value="stopped">Stopped</mat-option>
+                                <mat-option value="completed">Completed</mat-option>
+                                <mat-option value="entered-in-error">Entered-in-error</mat-option>
+                                <mat-option value="unknown">Unknown</mat-option>
+                            </mat-select>
+                            <button (click)="check(a)"><span class="material-icons">check</span></button>
+                            <button (click)="delete(a)"><span class="material-icons">delete</span></button>
+                        </mat-list-item>
+                    </ng-contanier>
+                    <ng-template #emptyAlerts>
+                        <h3 mat-subheader>Figyelmeztetések</h3>
+                        <mat-list-item>
+                            <mat-icon><span class="material-icons">highlight_off</span></mat-icon>
+                            <p mat-line class="demo-2">Nincsenek aktuális figyelmeztetések</p>
+                    </mat-list-item>
+                    </ng-template>
+                </mat-list>
+                <button *ngIf="getAccountType() !== 'patient'" (click)="addMessage()"><span class="material-icons">add</span></button>
+            </mat-card-actions>
+        </mat-card-content>
+        <mat-card-content class="desktop">
+            <mat-card-actions>
+                <mat-list>
+                    <h3 mat-subheader *ngIf="getNotifications().length > 0; else emptyNotifications">Értesítések</h3>
+                    <ng-contanier *ngFor="let a of getNotifications()">
+                            <mat-list-item *ngIf="a.type === 'notification'" [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                                <mat-icon mat-list-icon>note</mat-icon>
+                                <p mat-line class="demo-2">{{ a.content }}</p>
+                                <h4 mat-line>Feladó: {{ a.sender }}</h4>
+                                <button  (click)="save(a)"><span class="material-icons">save</span></button>
+                                <mat-select style="width:150px;" [(value)]="a.status" placeholder="Status">
+                                    <mat-option value="preparation">Preparation</mat-option>
+                                    <mat-option value="in-progress">In-progress</mat-option>
+                                    <mat-option value="not-done">Not-done</mat-option>
+                                    <mat-option value="on-hold">On-hold</mat-option>
+                                    <mat-option value="stopped">Stopped</mat-option>
+                                    <mat-option value="completed">Completed</mat-option>
+                                    <mat-option value="entered-in-error">Entered-in-error</mat-option>
+                                    <mat-option value="unknown">Unknown</mat-option>
+                                </mat-select>
+                                <button (click)="check(a)"><span class="material-icons">check</span></button>
+                                <button (click)="delete(a)"><span class="material-icons">delete</span></button>
+                            </mat-list-item>
+                        </ng-contanier>
+                        <ng-template #emptyNotifications>
+                            <h3 mat-subheader>Értesítések</h3>
+                            <mat-list-item>
+                                <mat-icon><span class="material-icons">highlight_off</span></mat-icon>
+                                <p mat-line class="demo-2">Nincsenek aktuális értesítések</p>
+                        </mat-list-item>
+                        </ng-template>
+                </mat-list>
+                <mat-list class="mat-list-test">
+                    <h3 mat-subheader *ngIf="getReminders().length > 0; else emptyReminders">Emlékeztetők</h3>
+                    <ng-contanier *ngFor="let a of getReminders()">
+                        <mat-list-item *ngIf="a.type === 'reminder'" [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                            <mat-icon class="mobil-no" mat-list-icon>note</mat-icon>
+                            <p mat-line>{{ a.content }}</p>
+                            <h4 mat-line class="demo-2">Feladó: {{ a.sender }}</h4>
+                            <button (click)="save(a)"><span class="mobil-no" class="material-icons">save</span></button>
+                            <mat-select class="mobil-smol" [(value)]="a.status" placeholder="Status">
+                                <mat-option value="preparation">Preparation</mat-option>
+                                <mat-option value="in-progress">In-progress</mat-option>
+                                <mat-option value="not-done">Not-done</mat-option>
+                                <mat-option value="on-hold">On-hold</mat-option>
+                                <mat-option value="stopped">Stopped</mat-option>
+                                <mat-option value="completed">Completed</mat-option>
+                                <mat-option value="entered-in-error">Entered-in-error</mat-option>
+                                <mat-option value="unknown">Unknown</mat-option>
+                            </mat-select>
+                            <ng-container *ngIf="a.status != 'completed'">
+                            <button (click)="check(a)"><span class="material-icons">check</span></button>
+                            </ng-container>
+                            <ng-container *ngIf="a.status == 'completed'">
+                                <button><span class="material-icons">check</span></button>
+                            </ng-container>
+                            <button (click)="delete(a)"><span class="material-icons">delete</span></button>
+                            <mat-button></mat-button>
+                        </mat-list-item>
+                    </ng-contanier>
+                        <ng-template #emptyReminders>
+                            <h3 mat-subheader>Emlékeztetők</h3>
+                            <mat-list-item>
+                                <mat-icon><span class="material-icons">highlight_off</span></mat-icon>
+                                <p mat-line class="demo-2">Nincsenek aktuális emlékeztetők</p>
+                        </mat-list-item>
+                        </ng-template>
+                </mat-list>
+                <mat-list>
+                    <h3 mat-subheader *ngIf="getInstructions().length > 0; else emptyInstructions">Instrukciók</h3>
+                    <ng-contanier *ngFor="let a of getInstructions()">
+                        <mat-list-item *ngIf="a.type === 'instruction'" [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                                <mat-icon class="mobil-no"  mat-list-icon>note</mat-icon>
+                                <h2 mat-line class="demo-2">{{ a.content }}</h2>
+                                <p mat-line>Feladó: {{ a.sender }}</p>
+                                <button (click)="save(a)"><span class="material-icons">save</span></button>
+                                <mat-select class="mobil-smol" [(value)]="a.status" placeholder="Status">
+                                    <mat-option value="preparation">Preparation</mat-option>
+                                    <mat-option value="in-progress">In-progress</mat-option>
+                                    <mat-option value="not-done">Not-done</mat-option>
+                                    <mat-option value="on-hold">On-hold</mat-option>
+                                    <mat-option value="stopped">Stopped</mat-option>
+                                    <mat-option value="completed">Completed</mat-option>
+                                    <mat-option value="entered-in-error">Entered-in-error</mat-option>
+                                    <mat-option value="unknown">Unknown</mat-option>
+                                </mat-select>
+                                <button (click)="check(a)"><span class="material-icons">check</span></button>
+                                <button (click)="delete(a)"><span class="material-icons">delete</span></button>
+                        </mat-list-item>
+                    </ng-contanier>
+                    <ng-template #emptyInstructions>
+                        <h3 mat-subheader>Instrukciók</h3>
+                        <mat-list-item>
+                            <mat-icon><span class="material-icons">highlight_off</span></mat-icon>
+                            <p mat-line class="demo-2">Nincsenek aktuális instrukciók</p>
+                    </mat-list-item>
+                    </ng-template>
+                </mat-list>
+                <mat-list>
+                    <h3 mat-subheader *ngIf="getAlerts().length > 0; else emptyAlerts">Figyelmeztetések</h3>
+                    <ng-contanier *ngFor="let a of getAlerts()" [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                    <mat-list-item *ngIf="a.type === 'alert'">
+                            <mat-icon class="mobil-no"  mat-list-icon>note</mat-icon>
+                            <h4 mat-line>Feladó: {{ a.sender }}</h4>
+                            <p mat-line class="demo-2">{{ a.content }}</p>
+                            <button (click)="save(a)"><span class="material-icons">save</span></button>
+                            <mat-select style="width:150px;" class="mobil-smol" [(value)]="a.status" placeholder="Status">
+                                <mat-option value="preparation">Preparation</mat-option>
+                                <mat-option value="in-progress">In-progress</mat-option>
+                                <mat-option value="not-done">Not-done</mat-option>
+                                <mat-option value="on-hold">On-hold</mat-option>
+                                <mat-option value="stopped">Stopped</mat-option>
+                                <mat-option value="completed">Completed</mat-option>
+                                <mat-option value="entered-in-error">Entered-in-error</mat-option>
+                                <mat-option value="unknown">Unknown</mat-option>
+                            </mat-select>
+                            <button (click)="check(a)"><span class="material-icons">check</span></button>
+                            <button (click)="delete(a)"><span class="material-icons">delete</span></button>
+                        </mat-list-item>
+                    </ng-contanier>
+                    <ng-template #emptyAlerts>
+                        <h3 mat-subheader>Figyelmeztetések</h3>
+                        <mat-list-item>
+                            <mat-icon><span class="material-icons">highlight_off</span></mat-icon>
+                            <p mat-line class="demo-2">Nincsenek aktuális figyelmeztetések</p>
+                    </mat-list-item>
+                    </ng-template>
+                </mat-list>
+                <button *ngIf="getAccountType() !== 'patient'" (click)="addMessage()"><span class="material-icons">add</span></button>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,24 @@
+<div class="outer-container background">
+  <div class="form-container">
+    <form [formGroup]="loginForm" (submit)="submit()">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label> E-mail cím
+        </mat-label>
+        <input matInput formControlName="email" required>
+        <mat-error *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
+          <span *ngIf="loginForm.controls.email.errors.required">A mező kitöltése kötelező.</span>
+          <span *ngIf="loginForm.controls.email.errors.pattern">Létező e-mail cím megadása kötelező.</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label> Jelszó
+        </mat-label>
+        <input matInput formControlName="password" type="password">
+        <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
+          <span *ngIf="loginForm.controls.password.errors.required">A mező kitöltése kötelező.</span>
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Bejelentkezés</button>
+    </form>
+  </div>
+</div>

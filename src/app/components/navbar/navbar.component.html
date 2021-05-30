@@ -1,0 +1,22 @@
+<mat-toolbar color="primary">
+    <!--<button><span class="material-icons">list</span></button>-->
+    <span>Communication</span>
+    <div fxHide.gt-xs>
+      <button mat-icon-button (click)="onToggleSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+      <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+        <li>
+          <a routerLink="/signup" routerLinkActive="active" *ngIf="!getLoggedIn()">Regisztráció</a>
+        </li>
+        <li>
+          <a routerLink="/signin" routerLinkActive="active" *ngIf="!getLoggedIn()">Bejelentkezés</a>
+        </li>
+        <li>
+          <a routerLink="/signin" routerLinkActive="active" *ngIf="getLoggedIn()" (click)="logout()">Kijelentkezés</a>
+        </li>
+      </ul>
+    </div>
+</mat-toolbar>

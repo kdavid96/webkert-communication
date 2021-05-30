@@ -1,0 +1,39 @@
+.container{
+    position: absolute;
+    width: 50%;
+    left: 25%;
+    top: 15%;
+}
+
+@media screen and (max-width: 575px) {
+    .container{
+        position: relative;
+        width: 100%;
+        left: 0;
+        top: 15%;
+        font-size: 75%;
+        height: 100%;
+    }
+
+    .mat-list-item {
+        display: flexbox;
+        justify-content: flex-end;
+        font-size: 85% !important;
+      }
+
+    mat-sidenav-content{
+        height: 100%;
+    }
+
+    main{
+        height: 100%;
+    }
+}
+
+mat-card{
+    text-align: center;
+}
+
+#title{
+    text-align: left;
+}

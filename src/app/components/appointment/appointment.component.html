@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="toolbar">
+      <mat-toolbar color="primary">
+        <button><a routerLink="/profile"><span class="material-icons">home</span></a></button>
+        <button><a routerLink="/history"><span class="material-icons">history</span></a></button>
+          <button><a routerLink="/contact"><span class="material-icons">description</span></a></button>
+          <button><a routerLink="/calendar"><span class="material-icons">date_range</span></a></button>
+          <span class="example-spacer"></span>
+      </mat-toolbar>
+  </div>
+  <form [formGroup]="appointmentForm" (submit)="submit()">
+    <mat-card class="home-card">
+        <div class="home-card-header">
+            <div mat-card-avatar class="home-card-header-image"></div>
+            <mat-card-title id="title" >Időpontfoglalás</mat-card-title>
+        </div>
+        <mat-card-content>
+            <mat-card-actions>
+                <mat-form-field appearance="fill">
+                  <mat-label>Orvos</mat-label>
+                  <mat-select formControlName="doctor" required>
+                    <ng-contanier *ngFor="let a of listDoctors()">
+                      <mat-option [value]='a.uid'>{{ a.lastName }} {{ a.firstName }}</mat-option>
+                    </ng-contanier>
+                  </mat-select>
+                  <mat-error *ngIf="appointmentForm.controls.doctor.touched && appointmentForm.controls.doctor.invalid">
+                    <span *ngIf="appointmentForm.controls.doctor.errors.required">A mező kitöltése kötelező.</span>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Időpont</mat-label>
+                  <mat-select formControlName="date" required>
+                    <ng-contanier *ngFor="let s of slotsArray">
+                      <mat-option [value]='s.month'>{{ s.month }} {{ s.day }}, {{ s.hour }}:{{ s.minutes }}</mat-option>
+                    </ng-contanier>
+                  </mat-select>
+                  <mat-error *ngIf="appointmentForm.controls.date.touched && appointmentForm.controls.date.invalid">
+                    <span *ngIf="appointmentForm.controls.date.errors.required">Időpont kiválasztása kitöltése kötelező.</span>
+                  </mat-error>
+                </mat-form-field>            
+                <mat-form-field appearance="fill">
+                  <mat-label>Probléma</mat-label>
+                  <textarea  formControlName="problem" matInput></textarea>
+                </mat-form-field>
+            </mat-card-actions>
+        </mat-card-content>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!appointmentForm.valid">Foglalás</button>
+    </mat-card>
+  </form>
+</div>

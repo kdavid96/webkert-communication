@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="toolbar">
+        <mat-toolbar color="primary">
+            <button><a routerLink="/profile"><span class="material-icons">home</span></a></button>
+            <button><a routerLink="/messages"><span class="material-icons">message</span></a></button>
+            <button><a routerLink="/contact"><span class="material-icons">description</span></a></button>
+            <!--<button><a routerLink="/calendar"><span class="material-icons">date_range</span></a></button>-->
+            <span class="example-spacer"></span>
+        </mat-toolbar>
+    </div>
+    <mat-card class="home-card">
+        <div class="home-card-header">
+            <div mat-card-avatar class="home-card-header-image"></div>
+            <mat-card-title id="title">Kapcsolat</mat-card-title>
+        </div>
+        <form [formGroup]="messageForm" (submit)="submit()">
+        <mat-card-content>
+            <mat-form-field appearance="fill">
+                <mat-label>Tárgy</mat-label>
+                <input formControlName="subject" matInput>
+            </mat-form-field><br>
+            <mat-form-field appearance="fill">
+                <mat-label>Címzett</mat-label>
+                <mat-select formControlName="recipient">
+                    <ng-container *ngFor="let a of listUsers()">
+                        <mat-option [value]='a.uid'>{{ a.lastName }} {{ a.firstName }}</mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field><br>
+            <mat-form-field appearance="fill">
+                <mat-label>Üzenet</mat-label>
+                <textarea formControlName="message" matInput></textarea>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!messageForm.valid">Küldés</button>
+        </mat-card-actions>
+        </form>
+    </mat-card>
+    <!--<mat-divider></mat-divider>
+    <mat-card class="home-card">
+        <div class="home-card-header">
+            <div mat-card-avatar class="home-card-header-image"></div>
+            <mat-card-title id="title">Üzenetek</mat-card-title>
+        </div>
+        <mat-card-content>
+            <mat-card-actions>
+                <mat-list>
+                    <h3 mat-subheader *ngIf="listMessages().length > 0 else emptyContacts">Beérkezett üzenetek</h3>
+                    <ng-contanier *ngFor="let a of listMessages()">
+                            <mat-list-item [ngStyle]="{'background-color': a.status == 'completed' ? '#89e689' : 'white'}">
+                                <mat-icon mat-list-icon>note</mat-icon>
+                                <p mat-line>Feladó: {{ a.sender }}</p>
+                                <h4 mat-line class="demo-2">{{ a.content }}</h4>
+                                <button (click)="save(a)"><span class="material-icons">save</span></button>
+                                <mat-select style="width:150px;" [(value)]="a.status" placeholder="Status">
+                                    <mat-option value="preparation">Preparation</mat-option>
+                                    <mat-option value="in-progress">In-progress</mat-option>
+                                    <mat-option value="not-done">Not-done</mat-option>
+                                    <mat-option value="on-hold">On-hold</mat-option>
+                                    <mat-option value="stopped">Stopped</mat-option>
+                                    <mat-option value="completed">Completed</mat-option>
+                                    <mat-option value="entered-in-error">Entered-in-error</mat-option>
+                                    <mat-option value="unknown">Unknown</mat-option>
+                                </mat-select>
+                                <button (click)="check(a)"><span class="material-icons">check</span></button>
+                                <button (click)="delete(a)"><span class="material-icons">delete</span></button>
+                            </mat-list-item>
+                        </ng-contanier>
+                        <ng-template #emptyContacts>
+                            <h3 mat-subheader>Beérkezett üzenetek</h3>
+                            <mat-list-item>
+                                <mat-icon><span class="material-icons">highlight_off</span></mat-icon>
+                                <p mat-line class="demo-2">Nincsenek beérkezett üzenetek</p>
+                        </mat-list-item>
+                        </ng-template>
+                </mat-list>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-card>-->
+</div>

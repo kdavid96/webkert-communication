@@ -1,0 +1,62 @@
+<div class="outer-container">
+    <div class="form-container">
+      <form [formGroup]="signupForm" (submit)="submit()">
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label> E-mail cím
+          </mat-label>
+          <input matInput formControlName="email" required>
+          <mat-error *ngIf="signupForm.controls.email.touched && signupForm.controls.email.invalid">
+            <span *ngIf="signupForm.controls.email.errors.required">A mező kitöltése kötelező.</span>
+            <span *ngIf="signupForm.controls.email.errors.pattern">Létező e-mail cím megadása kötelező.</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label> Vezetéknév
+          </mat-label>
+          <input matInput formControlName="firstName" required>
+          <mat-error *ngIf="signupForm.controls.firstName.touched && signupForm.controls.firstName.invalid">
+            <span *ngIf="signupForm.controls.firstName.errors.required">A mező kitöltése kötelező.</span>
+            <span *ngIf="signupForm.controls.firstName.errors.pattern">A mező kitöltése közetelező.</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label> Keresztnév
+          </mat-label>
+          <input matInput formControlName="lastName" required>
+          <mat-error *ngIf="signupForm.controls.lastName.touched && signupForm.controls.lastName.invalid">
+            <span *ngIf="signupForm.controls.lastName.errors.required">A mező kitöltése kötelező.</span>
+            <span *ngIf="signupForm.controls.lastName.errors.pattern">A mező kitöltése közetelező..</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label> Fiók típusa
+          </mat-label>
+            <select matNativeControl formControlName="accountType" required>
+              <option value="patient">Patient</option>
+              <option value="doctor">Doctor</option>
+            </select>
+          <mat-error *ngIf="signupForm.controls.accountType.touched && signupForm.controls.accountType.invalid">
+            <span *ngIf="signupForm.controls.accountType.errors.required">A mező kitöltése kötelező.</span>
+            <span *ngIf="signupForm.controls.accountType.errors.pattern">A mező kitöltése közetelező..</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label> Jelszó
+          </mat-label>
+          <input matInput formControlName="password" type="password">
+          <mat-error *ngIf="signupForm.controls.password.touched && signupForm.controls.password.invalid">
+            <span *ngIf="signupForm.controls.password.errors.required">A mező kitöltése kötelező.</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label> Jelszó újra
+          </mat-label>
+          <input matInput formControlName="password" type="password">
+          <mat-error *ngIf="signupForm.controls.password.touched && signupForm.controls.password.invalid">
+            <span *ngIf="signupForm.controls.password.errors.required">A mező kitöltése kötelező.</span>
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Regisztráció</button>
+      </form>
+    </div>
+  </div>

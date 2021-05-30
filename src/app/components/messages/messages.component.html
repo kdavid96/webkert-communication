@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="toolbar">
+        <mat-toolbar color="primary">
+            <button><a routerLink="/profile"><span class="material-icons">home</span></a></button>
+            <button><a routerLink="/messages"><span class="material-icons">message</span></a></button>
+            <button><a routerLink="/contact"><span class="material-icons">description</span></a></button>
+            <span class="example-spacer"></span>
+        </mat-toolbar>
+    </div>
+    <mat-card class="home-card">
+        <div class="home-card-header">
+            <div mat-card-avatar class="home-card-header-image"></div>
+            <mat-card-title id="title">Üzenetek</mat-card-title>
+        </div>
+        <mat-card-content>
+            <mat-card-actions>
+                <mat-list>
+                    <!--<h3 mat-subheader *ngIf="getMessages().length > 0; else emptyMessages">Bejövő</h3>-->
+                    <h3 mat-subheader *ngIf="messagesObsIncoming$ | async">Bejövő</h3>
+                    <ng-contanier *ngFor="let a of messagesObsIncoming$ | async">
+                            <mat-list-item>
+                                <mat-icon mat-list-icon>note</mat-icon>
+                                <h3 mat-line [ngStyle]="{'color': a.read == 'true' ? '#bfbfbf' : 'black'}">{{ a.text }}</h3>
+                                <p mat-line class="demo-2" [ngStyle]="{'color': a.read == 'true' ? '#E1DCDC' : 'black'}">Feladó: {{ a.sender.lastName }} {{ a.sender.firstName }}</p>
+                                <p mat-line class="demo-2" [ngStyle]="{'color': a.read == 'true' ? '#E1DCDC' : 'black'}">Tárgy: {{ a.subject }}</p>
+                                <button (click)="answer(a)"><span class="material-icons">question_answer</span></button>
+                                <ng-container *ngIf="a.read == 'false'">
+                                <button (click)="check(a)"><span class="material-icons">check</span></button>
+                                </ng-container>
+                                <button (click)="delete(a)"><span class="material-icons">delete</span></button>
+                            </mat-list-item>
+                        </ng-contanier>
+                        <ng-template #emptyMessages>
+                            <h3 mat-subheader>Üzenetek</h3>
+                            <mat-list-item>
+                                <mat-icon><span class="material-icons">highlight_off</span></mat-icon>
+                                <p mat-line class="demo-2">Nincsenek bejövő üzenetek</p>
+                        </mat-list-item>
+                        </ng-template>
+                </mat-list>
+                <mat-divider></mat-divider>
+                <mat-list>
+                    <!--<h3 mat-subheader *ngIf="getMessages().length > 0; else emptyMessages">Küldött</h3>-->
+                    <h3 mat-subheader *ngIf="messagesObsSent$ | async">Küldött</h3>
+                    <ng-contanier *ngFor="let a of messagesObsSent$ | async">
+                            <mat-list-item>
+                                <mat-icon mat-list-icon>note</mat-icon>
+                                <h3 mat-line [ngStyle]="{'color': a.read == 'true' ? '#bfbfbf' : 'black'}">{{ a.text }}</h3>
+                                <p mat-line class="demo-2" [ngStyle]="{'color': a.read == 'true' ? '#E1DCDC' : 'black'}">Feladó: {{ a.sender.lastName }} {{ a.sender.firstName }}</p>
+                                <p mat-line class="demo-2" [ngStyle]="{'color': a.read == 'true' ? '#E1DCDC' : 'black'}">Tárgy: {{ a.subject }}</p>
+                                <button (click)="answer(a)"><span class="material-icons">question_answer</span></button>
+                                <button (click)="delete(a)"><span class="material-icons">delete</span></button>
+                            </mat-list-item>
+                        </ng-contanier>
+                        <ng-template #emptyMessages>
+                            <h3 mat-subheader>Üzenetek</h3>
+                            <mat-list-item>
+                                <mat-icon><span class="material-icons">highlight_off</span></mat-icon>
+                                <p mat-line class="demo-2">Nincsenek küldött üzenetek</p>
+                        </mat-list-item>
+                        </ng-template>
+                </mat-list>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+</div>

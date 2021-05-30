@@ -1,0 +1,11 @@
+<mat-nav-list>
+    <a mat-list-item routerLink="/signin" (click)="onSidenavClose()" *ngIf="!getLoggedIn()">
+        <mat-icon>login</mat-icon><span>Bejelentkezés</span>
+    </a>
+    <a mat-list-item routerLink="/signup" (click)="onSidenavClose()" *ngIf="!getLoggedIn()">
+        <mat-icon>signup</mat-icon><span>Regisztráció</span>
+    </a>
+    <a mat-list-item routerLink="/signin" (click)="onSidenavClose();logout()" *ngIf="getLoggedIn()">
+        <mat-icon>logout</mat-icon><span>Kijelentkezés</span>
+    </a>
+</mat-nav-list>

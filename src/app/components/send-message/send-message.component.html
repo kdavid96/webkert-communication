@@ -1,0 +1,15 @@
+<div class="outer-container">
+    <div class="form-container">
+        <form [formGroup]="addReplyForm" (submit)="submit()">
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Válasz</mat-label>
+                <textarea  matInput rows="12" formControlName="text" type="text"></textarea>
+                <mat-error *ngIf="addReplyForm.controls.text.touched && addReplyForm.controls.text.invalid">
+                    <span *ngIf="addReplyForm.controls.text.errors.required">A mező kitöltése kötelező.</span>
+                    <span *ngIf="addReplyForm.controls.text.errors.pattern">Az üzenet megadása kötelező.</span>
+                </mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">Küldés</button>
+        </form>
+    </div>
+</div>

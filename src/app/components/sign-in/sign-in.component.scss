@@ -1,0 +1,16 @@
+.outer-container{
+    height: 100%;
+    width: 100%;
+}
+
+.form-container{
+    position: absolute;
+    width: 75%;
+    top: 15%;
+    left: 12.5%;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}

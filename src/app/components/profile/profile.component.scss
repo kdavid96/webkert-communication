@@ -1,0 +1,60 @@
+.container{
+    position: absolute;
+    width: 50%;
+    left: 25%;
+    top: 15%;
+}
+
+.mobil-smol{
+    width: 150px;
+}
+
+@media screen and (max-width: 1000px) {
+    .container{
+        position: relative;
+        width: 100%;
+        left: 0;
+        top: 15%;
+        height: 100%;
+    }
+
+    .mat-list-item {
+        display: flexbox;
+        justify-content: space-evenly;
+        height: 200%;
+    }
+
+    main{
+        height: 100%;
+    }
+
+    .mobil-no{
+        display: none;
+    }
+
+    .mobil-smol{
+        width: 100px;
+    }
+
+    mat-sidenav-content{
+        height: 100%;
+    }
+
+    .mobile{
+        display: block;
+    }
+
+    .desktop{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1001px) {
+    .mobile{
+        display: none;
+    }
+
+    .desktop{
+        display: block;
+    }
+}
